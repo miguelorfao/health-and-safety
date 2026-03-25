@@ -116,18 +116,22 @@ const HSChecksView = ({ hsChecks, user, selectedRestaurantId = "all" }) => {
                 key={check.id}
                 className={check.passed ? "passed-row" : "failed-row"}
               >
-                {isAdmin && <td>Restaurant {check.restaurantId}</td>}
-                <td>{check.checkType}</td>
-                <td>
+                {isAdmin && (
+                  <td data-label="Location">Restaurant {check.restaurantId}</td>
+                )}
+                <td data-label="Check Category">{check.checkType}</td>
+                <td data-label="Status">
                   <span
                     className={`status-badge ${check.passed ? "passed" : "failed"}`}
                   >
                     {check.passed ? "Compliant" : "Non-Compliant"}
                   </span>
                 </td>
-                <td>{check.notes || "-"}</td>
-                <td>{check.user}</td>
-                <td>{check.timestamp.toLocaleString()}</td>
+                <td data-label="Notes">{check.notes || "-"}</td>
+                <td data-label="Inspector">{check.user}</td>
+                <td data-label="Date & Time">
+                  {check.timestamp.toLocaleString()}
+                </td>
               </tr>
             ))}
           </tbody>

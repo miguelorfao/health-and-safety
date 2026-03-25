@@ -78,50 +78,52 @@ const Dashboard = ({
         <p className="section-description">
           Track cooked, chilled, frozen, and refrigeration checks.
         </p>
-        <table>
-          <thead>
-            <tr>
-              {showRestaurantColumn && <th>Restaurant</th>}
-              <th>Type</th>
-              <th>Food Item</th>
-              <th>Temperature</th>
-              <th>Time</th>
-              <th>User</th>
-              {isAdmin && <th>Actions</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {restaurantReadings.length === 0 &&
-              renderEmptyRow(
-                "No temperature logs recorded yet.",
-                isAdmin ? (showRestaurantColumn ? 7 : 6) : 6,
-              )}
-            {restaurantReadings.map((reading) => (
-              <tr key={reading.id}>
-                {showRestaurantColumn && (
-                  <td>Restaurant {reading.restaurantId}</td>
-                )}
-                <td>{reading.type}</td>
-                <td>{reading.foodItem}</td>
-                <td>
-                  {reading.temperature}°{reading.unit}
-                </td>
-                <td>{reading.timestamp.toLocaleString()}</td>
-                <td>{reading.user}</td>
-                {isAdmin && (
-                  <td>
-                    <button onClick={() => onEditTemperature(reading)}>
-                      Edit
-                    </button>
-                    <button onClick={() => onDeleteTemperature(reading.id)}>
-                      Delete
-                    </button>
-                  </td>
-                )}
+        <div className="dashboard-table-wrap dashboard-table-wrap--mobile-compact">
+          <table>
+            <thead>
+              <tr>
+                {showRestaurantColumn && <th>Restaurant</th>}
+                <th>Type</th>
+                <th>Food Item</th>
+                <th>Temperature</th>
+                <th>Time</th>
+                <th>User</th>
+                {isAdmin && <th>Actions</th>}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {restaurantReadings.length === 0 &&
+                renderEmptyRow(
+                  "No temperature logs recorded yet.",
+                  isAdmin ? (showRestaurantColumn ? 7 : 6) : 6,
+                )}
+              {restaurantReadings.map((reading) => (
+                <tr key={reading.id}>
+                  {showRestaurantColumn && (
+                    <td>Restaurant {reading.restaurantId}</td>
+                  )}
+                  <td>{reading.type}</td>
+                  <td>{reading.foodItem}</td>
+                  <td>
+                    {reading.temperature}°{reading.unit}
+                  </td>
+                  <td>{reading.timestamp.toLocaleString()}</td>
+                  <td>{reading.user}</td>
+                  {isAdmin && (
+                    <td>
+                      <button onClick={() => onEditTemperature(reading)}>
+                        Edit
+                      </button>
+                      <button onClick={() => onDeleteTemperature(reading.id)}>
+                        Delete
+                      </button>
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div className="section">
@@ -129,37 +131,39 @@ const Dashboard = ({
         <p className="section-description">
           See completed inspections and any failed compliance points.
         </p>
-        <table>
-          <thead>
-            <tr>
-              {showRestaurantColumn && <th>Restaurant</th>}
-              <th>Check Type</th>
-              <th>Passed</th>
-              <th>Notes</th>
-              <th>Time</th>
-              <th>User</th>
-            </tr>
-          </thead>
-          <tbody>
-            {restaurantChecks.length === 0 &&
-              renderEmptyRow(
-                "No health and safety checks recorded yet.",
-                showRestaurantColumn ? 6 : 5,
-              )}
-            {restaurantChecks.map((check) => (
-              <tr key={check.id}>
-                {showRestaurantColumn && (
-                  <td>Restaurant {check.restaurantId}</td>
-                )}
-                <td>{check.checkType}</td>
-                <td>{check.passed ? "Yes" : "No"}</td>
-                <td>{check.notes}</td>
-                <td>{check.timestamp.toLocaleString()}</td>
-                <td>{check.user}</td>
+        <div className="dashboard-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                {showRestaurantColumn && <th>Restaurant</th>}
+                <th>Check Type</th>
+                <th>Passed</th>
+                <th>Notes</th>
+                <th>Time</th>
+                <th>User</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {restaurantChecks.length === 0 &&
+                renderEmptyRow(
+                  "No health and safety checks recorded yet.",
+                  showRestaurantColumn ? 6 : 5,
+                )}
+              {restaurantChecks.map((check) => (
+                <tr key={check.id}>
+                  {showRestaurantColumn && (
+                    <td>Restaurant {check.restaurantId}</td>
+                  )}
+                  <td>{check.checkType}</td>
+                  <td>{check.passed ? "Yes" : "No"}</td>
+                  <td>{check.notes}</td>
+                  <td>{check.timestamp.toLocaleString()}</td>
+                  <td>{check.user}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div className="section">
@@ -167,49 +171,51 @@ const Dashboard = ({
         <p className="section-description">
           Monitor opening and closing routines for consistency.
         </p>
-        <table>
-          <thead>
-            <tr>
-              {showRestaurantColumn && <th>Restaurant</th>}
-              <th>Type</th>
-              <th>Items Completed</th>
-              <th>Time</th>
-              <th>User</th>
-              {isAdmin && <th>Actions</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {restaurantChecklists.length === 0 &&
-              renderEmptyRow(
-                "No opening or closing checklists have been submitted yet.",
-                isAdmin ? (showRestaurantColumn ? 6 : 5) : 5,
-              )}
-            {restaurantChecklists.map((checklist) => (
-              <tr key={checklist.id}>
-                {showRestaurantColumn && (
-                  <td>Restaurant {checklist.restaurantId}</td>
-                )}
-                <td>{checklist.type}</td>
-                <td>
-                  {checklist.items.filter((item) => item.checked).length}/
-                  {checklist.items.length}
-                </td>
-                <td>{checklist.timestamp.toLocaleString()}</td>
-                <td>{checklist.user}</td>
-                {isAdmin && (
-                  <td>
-                    <button onClick={() => onEditChecklist(checklist)}>
-                      Edit
-                    </button>
-                    <button onClick={() => onDeleteChecklist(checklist.id)}>
-                      Delete
-                    </button>
-                  </td>
-                )}
+        <div className="dashboard-table-wrap dashboard-table-wrap--mobile-compact">
+          <table>
+            <thead>
+              <tr>
+                {showRestaurantColumn && <th>Restaurant</th>}
+                <th>Type</th>
+                <th>Items Completed</th>
+                <th>Time</th>
+                <th>User</th>
+                {isAdmin && <th>Actions</th>}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {restaurantChecklists.length === 0 &&
+                renderEmptyRow(
+                  "No opening or closing checklists have been submitted yet.",
+                  isAdmin ? (showRestaurantColumn ? 6 : 5) : 5,
+                )}
+              {restaurantChecklists.map((checklist) => (
+                <tr key={checklist.id}>
+                  {showRestaurantColumn && (
+                    <td>Restaurant {checklist.restaurantId}</td>
+                  )}
+                  <td>{checklist.type}</td>
+                  <td>
+                    {checklist.items.filter((item) => item.checked).length}/
+                    {checklist.items.length}
+                  </td>
+                  <td>{checklist.timestamp.toLocaleString()}</td>
+                  <td>{checklist.user}</td>
+                  {isAdmin && (
+                    <td>
+                      <button onClick={() => onEditChecklist(checklist)}>
+                        Edit
+                      </button>
+                      <button onClick={() => onDeleteChecklist(checklist.id)}>
+                        Delete
+                      </button>
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div className="section">
@@ -217,37 +223,39 @@ const Dashboard = ({
         <p className="section-description">
           Review follow-up actions taken after issues were found.
         </p>
-        <table>
-          <thead>
-            <tr>
-              {showRestaurantColumn && <th>Restaurant</th>}
-              <th>Issue Type</th>
-              <th>Description</th>
-              <th>Action Taken</th>
-              <th>Time</th>
-              <th>User</th>
-            </tr>
-          </thead>
-          <tbody>
-            {restaurantActions.length === 0 &&
-              renderEmptyRow(
-                "No corrective actions logged yet.",
-                showRestaurantColumn ? 6 : 5,
-              )}
-            {restaurantActions.map((action) => (
-              <tr key={action.id}>
-                {showRestaurantColumn && (
-                  <td>Restaurant {action.restaurantId}</td>
-                )}
-                <td>{action.issueType}</td>
-                <td>{action.description}</td>
-                <td>{action.actionTaken}</td>
-                <td>{action.timestamp.toLocaleString()}</td>
-                <td>{action.user}</td>
+        <div className="dashboard-table-wrap dashboard-table-wrap--mobile-compact">
+          <table>
+            <thead>
+              <tr>
+                {showRestaurantColumn && <th>Restaurant</th>}
+                <th>Issue Type</th>
+                <th>Description</th>
+                <th>Action Taken</th>
+                <th>Time</th>
+                <th>User</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {restaurantActions.length === 0 &&
+                renderEmptyRow(
+                  "No corrective actions logged yet.",
+                  showRestaurantColumn ? 6 : 5,
+                )}
+              {restaurantActions.map((action) => (
+                <tr key={action.id}>
+                  {showRestaurantColumn && (
+                    <td>Restaurant {action.restaurantId}</td>
+                  )}
+                  <td>{action.issueType}</td>
+                  <td>{action.description}</td>
+                  <td>{action.actionTaken}</td>
+                  <td>{action.timestamp.toLocaleString()}</td>
+                  <td>{action.user}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

@@ -286,6 +286,31 @@ function App() {
 
         {currentUser && (
           <div className="app-toolbar">
+            <div className="nav" role="tablist" aria-label="App sections">
+              {navigationItems
+                .filter((item) => item.show)
+                .map((item) => (
+                  <button
+                    key={item.key}
+                    role="tab"
+                    aria-selected={currentView === item.key}
+                    className={currentView === item.key ? "active" : ""}
+                    onClick={() => setCurrentView(item.key)}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              <button
+                className="logout-button"
+                onClick={() => {
+                  setCurrentUser(null);
+                  setCurrentView("select");
+                }}
+              >
+                Logout
+              </button>
+            </div>
+
             <div className="app-user-card">
               <span className="app-user-card__label">Signed in as</span>
               <strong>{currentUser.username}</strong>
@@ -329,29 +354,6 @@ function App() {
                 <strong>{totalAlerts}</strong>
                 <span>Actions</span>
               </div>
-            </div>
-
-            <div className="nav">
-              {navigationItems
-                .filter((item) => item.show)
-                .map((item) => (
-                  <button
-                    key={item.key}
-                    className={currentView === item.key ? "active" : ""}
-                    onClick={() => setCurrentView(item.key)}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              <button
-                className="logout-button"
-                onClick={() => {
-                  setCurrentUser(null);
-                  setCurrentView("select");
-                }}
-              >
-                Logout
-              </button>
             </div>
           </div>
         )}

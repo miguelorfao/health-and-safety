@@ -263,6 +263,7 @@ td {
 th {
   background-color: #f2f2f2;
   font-weight: bold;
+  font-size: 10px;
 }
 
 td button {
@@ -680,16 +681,16 @@ td button:hover {
 
 .hs-statistics {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .stat-card {
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 1.5rem;
+  padding: 1rem;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -703,7 +704,7 @@ td button:hover {
 }
 
 .stat-number {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   margin: 0;
   color: #333;
@@ -719,15 +720,16 @@ td button:hover {
 
 .hs-filters {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.75rem;
   margin-bottom: 1rem;
-  flex-wrap: wrap;
 }
 
 .hs-filters div {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 100%;
 }
 
 .hs-filters label {
@@ -739,26 +741,64 @@ td button:hover {
   padding: 0.5rem;
   border: 1px solid #ddd;
   border-radius: 4px;
-  min-width: 150px;
+  min-width: 0;
+  width: 100%;
 }
 
 .hs-table-container {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow-x: auto;
+  overflow: visible;
 }
 
 .hs-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.hs-table thead {
+  display: none;
+}
+
+.hs-table tbody,
+.hs-table tr,
+.hs-table td {
+  display: block;
+}
+
+.hs-table tr {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
 }
 
 .hs-table th,
 .hs-table td {
-  padding: 0.75rem;
+  padding: 0.6rem 0.75rem;
   text-align: left;
   border-bottom: 1px solid #eee;
+}
+
+.hs-table td {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.88rem;
+}
+
+.hs-table td::before {
+  content: attr(data-label);
+  font-weight: 700;
+  color: #475569;
+  flex: 0 0 42%;
+}
+
+.hs-table td:last-child {
+  border-bottom: none;
 }
 
 .hs-table th {
@@ -767,6 +807,7 @@ td button:hover {
   color: #333;
   position: sticky;
   top: 0;
+  font-size: 10px;
 }
 
 .passed-row {
@@ -797,7 +838,7 @@ td button:hover {
 
 .no-data-message {
   text-align: center;
-  padding: 2rem;
+  padding: 1.2rem;
   color: #666;
   font-style: italic;
 }
@@ -855,7 +896,7 @@ body {
 
 #root {
   max-width: 1400px;
-  padding: 2rem 1.25rem 3rem;
+  padding: 1rem 0.75rem 2rem;
 }
 
 .app {
@@ -882,7 +923,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  padding: 1.5rem;
+  padding: 1rem;
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 20px;
@@ -992,22 +1033,30 @@ body {
 }
 
 .nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 0.6rem;
   margin-top: 0;
+  padding: 0.6rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
 }
 
 .nav button,
 .logout-button {
   padding: 0.7rem 1rem;
+  min-height: 44px;
+  width: 100%;
   border-radius: 10px;
   border: 1px solid #d7def3;
   background: #f8faff;
   color: #2d3b73;
   font-weight: 600;
   transition: all 0.2s ease;
+  white-space: normal;
+  text-align: center;
 }
 
 .nav button:hover,
@@ -1020,10 +1069,18 @@ body {
 }
 
 .logout-button {
-  margin-left: auto;
+  grid-column: 1 / -1;
+  margin-left: 0;
   background: #fff5f5;
   color: #b42318;
   border-color: #fecaca;
+  justify-self: stretch;
+}
+
+.nav button:focus-visible,
+.logout-button:focus-visible {
+  outline: 2px solid #3955d6;
+  outline-offset: 2px;
 }
 
 .app-main {
@@ -1061,7 +1118,7 @@ body {
 }
 
 .page-panel {
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .temperature-logger,
@@ -1160,8 +1217,9 @@ body {
 .dashboard-header,
 .reports-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-direction: column;
   gap: 1rem;
   margin-bottom: 1.25rem;
   text-align: left;
@@ -1172,13 +1230,77 @@ body {
 .section-description,
 .empty-note {
   color: #6b7280;
+  font-size: 10px;
 }
 
 .summary-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1rem;
   margin-bottom: 1.5rem;
+}
+
+.dashboard-table-wrap {
+  margin-top: 1rem;
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.dashboard-table-wrap table {
+  margin-top: 0;
+  border-radius: 0;
+  min-width: 100%;
+}
+
+.dashboard-table-wrap th,
+.dashboard-table-wrap td {
+  white-space: normal;
+  word-break: break-word;
+}
+
+.dashboard .section {
+  margin: 1rem 0;
+  padding: 0.9rem;
+}
+
+.dashboard-table-wrap th,
+.dashboard-table-wrap td {
+  padding: 0.55rem;
+  font-size: 0.86rem;
+}
+
+.dashboard-table-wrap--mobile-compact td {
+  font-size: 7px;
+}
+
+.dashboard-table-wrap--mobile-compact th {
+  font-size: 8px;
+}
+
+.dashboard-table-wrap--mobile-compact table {
+  table-layout: fixed;
+}
+
+.dashboard-table-wrap--mobile-compact th,
+.dashboard-table-wrap--mobile-compact td {
+  padding: 0.35rem;
+  overflow-wrap: anywhere;
+  line-height: 1.15;
+}
+
+.dashboard-table-wrap th {
+  font-size: 10px;
+}
+
+.dashboard-table-wrap td button {
+  margin: 0.2rem 0.2rem 0 0;
+}
+
+.dashboard-table-wrap--mobile-compact td button {
+  padding: 0.2rem 0.35rem;
+  font-size: 7px;
 }
 
 .section,
@@ -1218,9 +1340,9 @@ tbody tr:hover {
   gap: 1rem;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 769px) {
   #root {
-    padding: 1rem 0.75rem 2rem;
+    padding: 2rem 1.25rem 3rem;
   }
 
   .app-header,
@@ -1229,24 +1351,145 @@ tbody tr:hover {
   .login,
   .section,
   .report-section {
-    padding: 1rem;
+    padding: 1.5rem;
   }
 
   .logout-button {
-    margin-left: 0;
+    margin-left: auto;
   }
 
   .nav {
-    flex-direction: column;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.65rem;
+    gap: 0.75rem;
   }
 
   .nav button,
   .logout-button {
-    width: 100%;
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .logout-button {
+    grid-column: auto;
+    justify-self: auto;
+    margin-left: auto;
   }
 
   .dashboard-header,
   .reports-header {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .summary-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+
+  .hs-statistics {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    padding: 1.5rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  .hs-filters {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .hs-filters div {
+    width: auto;
+  }
+
+  .hs-filters select {
+    min-width: 150px;
+    width: auto;
+  }
+
+  .hs-table-container {
+    overflow-x: auto;
+  }
+
+  .hs-table {
+    border-collapse: collapse;
+  }
+
+  .hs-table thead {
+    display: table-header-group;
+  }
+
+  .hs-table tbody {
+    display: table-row-group;
+  }
+
+  .hs-table tr {
+    display: table-row;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+
+  .hs-table td,
+  .hs-table th {
+    display: table-cell;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .hs-table td::before {
+    content: none;
+  }
+
+  .no-data-message {
+    padding: 2rem;
+  }
+
+  .dashboard-table-wrap table {
+    min-width: 760px;
+  }
+
+  .dashboard-table-wrap th,
+  .dashboard-table-wrap td {
+    padding: 0.75rem;
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+
+  .dashboard-table-wrap--mobile-compact th,
+  .dashboard-table-wrap--mobile-compact td {
+    font-size: 1rem;
+    padding: 0.75rem;
+    line-height: normal;
+  }
+
+  .dashboard-table-wrap--mobile-compact table {
+    table-layout: auto;
+  }
+
+  .dashboard-table-wrap--mobile-compact td button {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .dashboard-table-wrap th,
+  .hs-table th,
+  th {
+    font-size: 16px;
+  }
+
+  .dashboard .section {
+    padding: 1.25rem;
   }
 }
