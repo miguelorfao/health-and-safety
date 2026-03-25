@@ -35,6 +35,6 @@ Run `npm run preview` to preview the production build.
 ## Technologies Used
 
 - React
-- TypeScript
+- JavaScript (JSX)
 - Vite
 - ESLint

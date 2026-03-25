@@ -942,6 +942,29 @@ body {
   gap: 0.85rem;
 }
 
+.app-admin-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  width: fit-content;
+}
+
+.app-admin-filter label {
+  font-weight: 600;
+  color: #334155;
+}
+
+.app-admin-filter select {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  background: #fff;
+}
+
 .app-summary-item,
 .summary-card {
   padding: 1rem;
